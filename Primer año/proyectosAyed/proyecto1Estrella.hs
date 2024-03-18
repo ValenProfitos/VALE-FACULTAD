@@ -366,3 +366,84 @@ hayMultiplo n xs = existe' xs (esMultiplo n)
 
 --- B ---
 -- Usá cualquier version de primIgualesA para programar primIuguales. Esta permitido dividir en casos, pero no usar recursion
+
+------ EJERCICIO 12 * ------
+-- Todas las funciones del ejercicio 4 son similares entre sí:cada una aplica la función termino t a todos los elementos de una lista, y luego aplica algún operador entre todos ellos, obteniendose así el resultado final. Para el caso de la lista vacía, se devuelve el elemento neutro. De esa maera cada una de ellas computa una cuantificacion sobre los elementos de la lista transformador por t:
+-- paratodo’.xs.t = ⟨ ∀ i : 0 ≤ i < #xs : t.xs!i ⟩
+-- existe’.xs.t = ⟨ ∃ i : 0 ≤ i < #xs : t.xs!i ⟩
+-- sumatoria’.xs.t = ⟨ Σ i : 0 ≤ i < #xs : t.xs!i ⟩
+-- productoria’.xs.t = ⟨ Π i : 0 ≤ i < #xs : t.xs!i ⟩
+
+-- Por ejemplo, para sumatoria' el operador asociado al cuantificador ∑ es la suma (+), por lo que
+-- sumatoria' [1,2,3] t = (t 1) + (t 2) + (t 3) + 0
+-- donde el calculo consisitio en aplicar t a cada elemento, combinandolos con el operador (+) hasta llegar a la lista vacía donde se devuelve el neutro de la suma (0). Guíandote por las observaciones anterirores, definí de manera recursiva la funcion cuantGen (denota la cuantificacion generalizanda):
+-- cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
+-- cuantaGen op z xs t = ...
+
+-- que tomando como argunento un operador op, su elemento neutro z, una lista de elementos xs y una funcion término t, aplica el operador a los elementos de la lista, transformados por la función término. En otras palabras sea ⊕ un cuantificador cualquiera y ⊗ su operador asociado,
+-- cuantaGen.⊗.z.xs.t = ⟨ ⊕ ⅈ : 0 ⋜ ⅈ < #xs: t.(xs!ⅈ) ⟩
+
+-- Reescribir todas las funciones del punto 4 utilizando el cuantificador generalizado (sin utilizar induccion y en una linea por función)
+
+------  EJERCICIO 13 * ------
+-- Definir una funcion que se denomina distanciad e edición. Que toma como entrada dos strings (lista de caracteres). distanciaEdicion :: [Char] -> [Char] -> Int. La funcion distanciaEdicion, se comporta de la siguiente manera: -Si alguna de las listas es vacía, devuelve la longitud de la otra lista. -Si las dos listas son no vacias x:xs e y:ys,comprara los primeros elementos de cada lista:
+-- Si x == y, no suma y sigue computando la distancia para xs e ys
+-- Si x != y, suma 1 y sigue computando la distancia para xs e ys
+
+------ EJERCICIO 14 * ------
+-- Definí una funcion primeros que cumplen, primQueCumplen::[a] -> (a->Bool) -> [a], tal que, dada una lista ls y un predicado p, devuelve el tramo inicial de ls que cumple p
+
+------ EJERCICIO 15 * ------
+-- Para cada uno de los siguientes patrones, decidí si están bien tipados, en tal caso dá los tipos de cada subexpresión. En caso de estar bien tipado, ¿el patron cubre todos los casos por definición?
+
+--- A ---
+-- f :: (a, b) -> ..
+-- f (x, y) = ...
+
+--- B ---
+-- f :: [(a,b)] -> ...
+-- f (a,b) = ...
+
+--- C ---
+-- f :: [(a,b)]- > ...
+-- f (x:xs) = ...
+
+--- D ---
+-- f :: [(a,b)] -> ...
+-- f ((x,y) : ((a,b) : xs)) = ...
+
+--- E ---
+-- f :: [(Int,a)] -> ...
+-- f [(0,a)] = ...
+
+--- F ---
+-- f :: [(Int, a)] -> ...
+-- f ((x,1) : xs) = ...
+
+--- G ---
+-- f :: (Int -> Int) -> Int -> ...
+-- f a b = ...
+
+--- H ---
+-- f :: (Int -> Int) -> Int -> ...
+-- f a 3 = ...
+
+--- I ---
+-- f :: (Int -> Int) -> Int -> ...
+-- f 0 1 2 = ...
+
+------ EJERCICIO 16 * ------
+-- Para las siguientes declaraciones de funciones, da al menos una definición cuando sea posible. ¿Podés dar alguna otra definición alternativa a la que diste en cada caso?
+-- Por ejemplo, si la declaracion de f :: (a,b) -> a, la respuesta es: f (x,y) = x
+
+--- A ---
+-- f :: (a,b) -> b
+
+--- B ---
+-- f :: (a,b) -> c
+
+--- C ---
+-- f :: (a -> b) -> a -> b
+
+--- D ---
+-- f :: (a -> b) -> [a] -> [b]
