@@ -292,6 +292,14 @@ hayMultiplo n xs = existe' xs (esMultiplo n)
 -- sumaCuadrados :: Int -> Int, dado un numero no negativo n, calcula la suma de los primeros cuadrados
 -- Ayuda: En Haskell se puede escribir la lista que contiene el rango de números entre n y m como [n..m] 
 
+-- Para resolver este ejercicio voy a necesitar hacer una función auxiliar llamada alCuadrado :: Int -> Int, que dado un entero me devuelve el cuadrado del mismo, es decir, multiplicado por si mismo
+
+--- FUNCION AUXILIAR alCuadrado ---
+alCuadrado :: Int -> Int
+alCuadrado x = x * x
+
+-- Ejemplos para saber que funciona correctamente
+--
 
 --- D ---
 -- Programar la funcion existeDivisor :: Int -> [Int] -> Bool, que dado un entero n y una lista ls, devuelve True si y solo si, existe algún elemento en ls que divida a n
