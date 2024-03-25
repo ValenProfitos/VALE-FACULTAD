@@ -597,3 +597,9 @@ primIguales (x:y:xs)  | x==y = x : primIguales (y:xs)
 primIguales' :: Eq a => [a] -> [a]
 primIguales' [] = []
 primIguales' (x:xs) = primIgualesA' x (x:xs)
+
+-- Ejemplos:
+-- ghci> primIguales' "aargentina"
+-- "aa"
+-- ghci> primIguales' [3,3,2,1,2,3]
+-- [3,3]

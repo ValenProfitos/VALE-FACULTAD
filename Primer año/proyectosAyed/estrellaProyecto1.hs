@@ -292,61 +292,253 @@ hayMultiplo n xs = existe' xs (esMultiplo n)
 -- sumaCuadrados :: Int -> Int, dado un numero no negativo n, calcula la suma de los primeros cuadrados
 -- Ayuda: En Haskell se puede escribir la lista que contiene el rango de números entre n y m como [n..m] 
 
--- Para resolver este ejercicio voy a necesitar hacer una función auxiliar llamada alCuadrado :: Int -> Int, que dado un entero me devuelve el cuadrado del mismo, es decir, multiplicado por si mismo
+sumaCuadrados :: Int -> Int
+sumaCuadrados x = sumatoria' [0..x] (^2)
 
---- FUNCION AUXILIAR alCuadrado ---
-alCuadrado :: Int -> Int
-alCuadrado x = x * x
-
--- Ejemplos para saber que funciona correctamente
---
+-- Ejemplos:
+-- ghci > sumaCuadrados 0
+-- 0
+-- ghci > sumaCuadrados 1
+-- 1
+-- ghci > sumaCuadrados 2
+-- 5
+-- ghci > sumaCuadrados 3
+-- 14
 
 --- D ---
 -- Programar la funcion existeDivisor :: Int -> [Int] -> Bool, que dado un entero n y una lista ls, devuelve True si y solo si, existe algún elemento en ls que divida a n
+
+-- Para resolver este ejercicio voy a necesitar hacer una función auxiliar llamada esDivisor :: Int -> Int -> Bool, dado dos enteros verifica si el segundo es divisor del primero
+
+--- FUNCION AUXILIAR esDivisor ---
+esDivisor :: Int -> Int -> Bool
+esDivisor x y = mod x y == 0
+
+-- Ejemplo para ver que funcione:
+-- ghci > esDivisor 2 4
+-- False
+-- ghci > esDivisor 4 2
+-- True
+-- ghci > esDivisor 25 5
+-- True
+
+-- existeDivisor --
+existeDivisor :: Int -> [Int] -> Bool
+existeDivisor n ls = existe' ls (esDivisor n)
+
+-- Ejemplos:
+-- ghci > existeDivisor 4 [3, 5]
+-- False
+-- ghci > existeDivisor 15 [3, 5]
+-- True
 
 --- E ---
 -- Utilizando la función del apartado antenior, defini la funcion esPrimo :: Int -> Bool, que dado un entero n, devuelve True si y solo n es primo
 -- Ayuda: En Haskell se puede escribir la lista que contiene el rango de números entre n y m como [n..m]
 
+esPrimo :: Int -> Bool
+esPrimo n = not (existeDivisor n [2..(n-1)] || (n<1))
+
+-- Ejemplos:
+-- ghci > esPrimo 1
+-- True
+-- ghci > esPrimo 2
+-- True
+-- ghci > esPrimo 3
+-- True
+-- ghci > esPrimo 4
+-- False
+-- ghci > esPrimo 5
+-- True
+-- ghci > esPrimo 6
+-- False
+
 --- F ---
 -- ¿Se te ocurre como redefinir factorial para evitar usar recursión?
 
+factorial' :: Int -> Int
+factorial' x = productoria' [1..x] id
+
+-- Ejemplos:
+-- ghci > factorial' 3
+-- 6
+-- ghci > factorial' 5
+-- 120
+
 --- G ---
 -- Programar la funcion multiplicaPrimos :: [Int] -> Int, que calcula el producto de todos los números primos de una lista
+
+-- Para resolver este ejercicio voy a necesitar hacer una función auxiliar llamada listaDePrimos :: [Int] -> [Int], que dada una lista de números me devuelve otra lista que contenga solo los que son primos de la primera
+
+--- FUNCION AUXILIAR listaDePrimos ---
+listaDePrimos :: [Int] -> [Int]
+listaDePrimos [] = []
+listaDePrimos (x:xs)  | esPrimo x = x : listaDePrimos xs 
+                      | otherwise = listaDePrimos xs 
+
+-- Ejemplos para ver que funciona correctamente:
+-- ghci > listaDePrimos [1, 2, 3, 4, 5, 6]
+-- [1, 2, 3, 5]
+-- ghci > listaDePrimos [4, 6, 8, 9, 7]
+-- [7]
+
+-- multiplicaPrimos --
+multiplicaPrimos :: [Int] -> Int
+multiplicaPrimos xs = productoria' (listaDePrimos xs) id 
+
+-- Ejemplos:
+-- ghci > multiplicaPrimos [1, 3, 5, 6]
+-- 15
+-- ghci > multiplicaPrimos [1, 3, 2, 7, 9]
+-- 42
 
 --- H ---
 -- Programar la funcion esFib :: Int -> Bool, que dado un entero n, devuelve True si y solo si n está en la suceción de Fibonnacci
 -- Ayuda: Realizar una función auxiliar fib :: Int -> Int, que dado un n devuelva el n-esimo elemento de la suceción
 
+--- FUNCION AUXILIAR fib ---
+fib :: Int -> Int
+fib n | n <= 1 = n
+      | otherwise = fib(n-1) + fib(n-2)
+
+-- Ejemplos probando que la función funcione correctamente:
+-- ghci > fib 2
+-- 1
+-- ghci > fib 4
+-- 3
+-- ghci > fib 5
+-- 5
+-- ghci > fib 20
+-- 6765
+
+-- Para encontrar la solución a este problema voy a necesitar crear otra función auxiliar llamada listaFib :: Int -> [Int], que genere una lista de los primeros n elementos de la sucesión (en orden inverso y que incluye al 0)
+
+listaFib :: Int -> [Int]
+listaFib 0 = [0]
+listaFib 1 = [1, 0]
+listaFib 2 = [1, 1, 0]
+listaFib n = fib n : listaFib (n-1)
+
+-- Ejemplos para verificar que funcione correctamente:
+-- ghci > listaFib 3
+-- [2, 1, 1, 0]
+-- ghci > listaFib 5
+-- [5, 3, 2, 1, 1, 0]
+-- ghci > listaFib 7
+-- [13, 8, 5, 3, 2, 1, 1, 0]
+-- ghci > listaFib 9
+-- [34, 21, 13, 8, 5, 3, 2, 1, 1, 0]
+-- ghci > listaFib 10
+-- [55, 34, 21, 13, 8, 5, 3, 2, 1, 1, 0]
+-- ghci > listaFib 20
+-- [6765, 4181, 2584, 1597, 987, 610, 377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2, 1, 1, 0]
+
+-- esFib --
+esFib :: Int -> Bool
+esFib t = existe' (listaFib 20) (==t) -- Limito la función a 20 números por una cuestion de recursos de la computadora
+
+-- Ejemplos:
+-- ghci > esFib 4
+-- False
+-- ghci > esFib 10
+-- False
+-- ghci > esFib 13
+-- True
+-- ghci > esFib 144
+-- True
+
 --- I ---
 -- Utilizando la función del apartado anterior, defini la función todosFib :: [Int] -> Bool que dada una lista de xs de enteros, devuelva si todos los elementos de la lista pertenecen (o no) a la sucesión de Fibonnaci
 
+todosFib :: [Int] -> Bool
+todosFib xs = paratodo' xs esFib
+
+-- Ejemplos:
+-- ghci > todosFib [0, 1, 2, 3, 5]
+-- True
+-- ghci > todosFib [0, 1, 2, 4, 10]
+-- False
+
 ------ EJERCICIO 7 ------
 -- Indagar en Hoogle sobre las funciones map y filter. Tambien podemos consultar su tipo en ghci con el comando :t
+
 -- ¿Qué hacen estas funciones?
+
+-- map :: (a -> b) -> [a] -> [b]
+-- Esta función se utiliza para aplicar una función dada a cada elemento de una lsta y devuelve una lista con los resultados de aplicar esa función a cada elemento
+
+-- filter :: (a -> Bool) -> [a] -> [a]
+-- La función filter se utiliza para filtar elementos de una lista basandose en una condición. Toma una lista y un predicado como argumentos y devuelve una lista nueva que contiene solo los elementos para los cuales ese predicado es verdadero
+
 -- ¿A qué equivale la expresión map succ [1, -4, 6, 2, -8], donde succ n = n+1?
+-- Lo que me está diciendo la expresión es que aplique succ a la lista [1, -4, 6, 2, -8], succ le suma 1 a mi elemento, entonces la expresión será equivalente a [2, -3, 7, 3, -9]
+
 -- ¿Y la expresión filter esPositivo [1, -4, 6, 2, -8]?
+-- Lo que me está pidiendo la expresión es que filtre los numeros positivos, lo que me devuelve la lista [1, 6, 2]
 
 ------ EJERCICIO 8 ------
 -- Programá una función que dada una lista de numers xs, devuelve la lista que resulta de duplicar cada valor de xs
 
 --- A ---
 -- Definila usando recursion
+duplica :: [Int] -> [Int]
+duplica [] = []
+duplica (x:xs) = x*2 : duplica xs 
+
+-- Ejemplos:
+-- ghci > duplica [1, 2, 3, 4]
+-- [2, 4, 6, 8]
+-- ghci > duplica [5, 8, 2]
+-- [10, 16, 4]
 
 --- B ---
 -- Definila utilizando la función map
+duplica' :: [Int] -> [Int]
+duplica' xs = map (*2) xs 
+
+-- Ejemplos:
+-- ghci > duplica' [9, 2, 6]
+-- [18, 4, 12]
+-- ghci > duplica' [0, 53, 6]
+-- [0, 106, 12]
 
 ------ EJERCICIO 9 ------
 -- Programá una función que dadda una lista de numeros xs, calcula una lista que tiene como elementos aquellos numeros de xs que son primos
 
 --- A ---
 -- Definila usando recursion
+sonPrimos :: [Int] -> [Int]
+sonPrimos [] = []
+sonPrimos (x:xs)  | esPrimo x = x : sonPrimos xs
+                  | otherwise = sonPrimos xs 
+
+-- Ejemplos:
+-- ghci > sonPrimos [1, 4, 8, 3]
+-- [1, 3]
+-- ghci > sonPrimos [1, 4, 8, 3, 7, 2]
+-- [1, 3, 7, 2]
 
 --- B --- 
 -- Definila utilizando la funcion filter
+sonPrimos' :: [Int] -> [Int]
+sonPrimos' xs = filter esPrimo xs
+
+-- Ejemplos:
+-- ghci > sonPrimos' [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+-- [1, 2, 3, 5, 7]
+-- ghci > sonPrimos' [11, 12, 13, 14, 15]
+-- [11, 13]
 
 --- C ---
 -- Revisá tu definicion del ejercicio 6g ¿Se puede mejorar?
+multiplicaPrimos' :: [Int] -> Int
+multiplicaPrimos' xs = productoria' (filter esPrimo xs) id
+
+-- Ejemplos:
+-- ghci > multiplicaPrimos' [1, 2, 3, 4, 5, 6, 7, 8, 9]
+-- 210
+-- ghci > multiplicaPrimos' [11, 12, 13, 14]
+-- 143
 
 ------ EJERCICIO 10 ------
 -- La función primIgualesA toma un valor y una lista, y calcula el tramo inicial más largo de la lista cuyos elementos son iguales a ese valor. Por ejemplo:
@@ -358,9 +550,27 @@ alCuadrado x = x * x
 
 --- A ---
 -- Programá primIgualesA por recursión
+primIgualesA :: Eq a => a -> [a] -> [a]
+primIgualesA _ [] = []
+primIgualesA n (x:xs) | n==x = x : primIgualesA n xs
+                      | otherwise = []
+
+-- Ejemplos:
+-- ghci > primIgualesA 'a' "aaargeentiinaa"
+-- "aaa"
+-- ghci > primIgualesA 3 [3, 3, 3, 3, 3, 4, 5, 3, 3, 3, 3]
+-- [3, 3, 3, 3, 3]
 
 --- B ---
 -- Programá nuevamente la funcion utilizando takeWhile
+primIgualesA' :: Eq a => a -> [a] -> [a]
+primIgualesA' n xs = takeWhile (==n) xs 
+
+-- Ejemplos:
+-- ghci > primIgualesA' 'v' "vvaaacaaccvvv"
+-- "vv"
+-- ghci > primIgualesA' 5 [5, 5, 6, 7, 8, 6, 5, 5, 5]
+-- [5, 5]
 
 ------ EJERCICIO 11 ------
 -- La funcion primIguales toma una lista y devuelve el mayor tramo inicial de la lista cuyos elementos son todos iguales entre si, Por ejemplo:
@@ -371,9 +581,22 @@ alCuadrado x = x * x
 
 --- A ---
 -- Programá primIguales por recursión
+primIguales :: Eq a => [a] -> [a]
+primIguales [] = []
+primIguales (x:y:xs)  | x==y = x : primIguales (y:xs)
+                      | otherwise = [x]
+
+-- Ejemplos:
+-- ghci > primIguales "aaargeentiinaaa"
+-- "aaa"
+-- ghci > primIguales [3, 4, 5, 3, 3]
+-- [3]
 
 --- B ---
 -- Usá cualquier version de primIgualesA para programar primIuguales. Esta permitido dividir en casos, pero no usar recursion
+primIguales' :: Eq a => [a] -> [a]
+primIguales' [] = []
+primIguales' (x:xs) = primIgualesA' x (x:xs)
 
 ------ EJERCICIO 12 * ------
 -- Todas las funciones del ejercicio 4 son similares entre sí:cada una aplica la función termino t a todos los elementos de una lista, y luego aplica algún operador entre todos ellos, obteniendose así el resultado final. Para el caso de la lista vacía, se devuelve el elemento neutro. De esa maera cada una de ellas computa una cuantificacion sobre los elementos de la lista transformador por t:
