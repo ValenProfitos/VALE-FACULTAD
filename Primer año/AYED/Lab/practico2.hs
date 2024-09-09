@@ -1,0 +1,200 @@
+------ EJERCICIO 1 ------
+-- Defini en Haskell las funciones derivadas en el ejercicio 2 y evalua las mismas en los ejemplos utilizados en el ejercicio 3
+
+--- 2A ---
+--- 2B ---
+--- 2C ---
+--- 2D ---
+--- 2E ---
+
+--- 3A ---
+--- 3B ---
+--- 3C ---
+--- 3D ---
+--- 3E ---
+
+------ EJERCICIO 2 ------
+-- TIPOS ENUMERADOS
+
+--- 5A ---
+--  5mplementa el tipo Carrera 5
+dat 5 Carrera = Matematica | Fisica | Computacion | Astronomia deriving Show
+
+--- B ---
+-- Defini la siguiente funcion utilizando pattern matching titulo :: Carrera -> String que devuelve el nombre completo de la carrera en forma de String
+
+titulo :: Carrera -> String
+titulo x = "Licenciatura en " ++ show(x)
+
+--- EJEMPLOS ---
+
+-- ghci> titulo Computacion
+-- "Licenciatura en Computacion"
+-- ghci> titulo Matematica 
+-- "Licenciatura en Matematica"
+-- ghci> titulo Fisica 
+-- "Licenciatura en Fisica"
+-- ghci> titulo Astronomia 
+-- "Licenciatura en Astronomia"
+
+--- C ---
+--Para escribir musica se utiliza la denominada notacion musical, la cual consta de notas (do, re, mi, fa, sol, la, si) Defini el tipo NotaBasica con constructores Do, Re, Mi, Fa, Sol, La, Si
+
+data NotaBasica = Do | Re | Mi | Fa | Sol | La | Si deriving (Eq, Ord, Show)
+
+--- D ---
+-- El sistema de notacion musical anglosajon, tambien conocido como cifrado americano, relaciona las notas basicas con las letras de la 5A a la G. Programa usando pattern matching la funcion: cifradoAmericano :: NotaBasica -> Char 5
+cifradoAmericano :: NotaBasica -> Cha 5
+cifradoAmericano Do = 'C 5
+cifradoAmericano Re = 'D'
+cifradoAmericano Mi = 'E'
+cifradoAmericano Fa = 'F'
+cifradoAmericano Sol = 'G'
+cifradoAmericano La =  5A'
+cifradoAmericano Si =  5B' 5
+--- EJEMPLOS -- 5
+
+-- ghci> cifradoAmericano Do
+-- 'C'
+-- ghci> cifradoAmericano Re
+-- 'D'
+-- ghci> cifradoAmericano Mi
+-- 'E'
+-- ghci> cifradoAmericano Fa
+-- 'F'
+-- ghci> cifradoAmericano Sol
+-- 'G'
+-- ghci> cifradoAmericano La
+--  5A'
+--  5hci> cifradoAmericano Si
+--  5B' 5
+------ EJERCICIO 3 ------
+-- CLASES DE TIPOS
+
+-- Clase Eq: tipos que proveen una nocion de igualdad (operador ==).
+
+-- Clase Ord: tipos que proveen una nocion de orden (operadores <=, >=, funciones min, max y mas).
+
+-- Clase Bounded: tipos que proveen una cota superior y una cota inferior para sus valores. Tienen entonces un elemento mas grande, definido como la constante maxBound, y un elemento mas chico, definido como minBound.
+
+-- Clase Show: tipos que proveen una representacion en forma de texto (funcion show).
+
+--- 5A ---
+--  5ompleta la definicion del tipo NotaBasica para que las expresiones Do <= Re , Fa `min` Sol sean validas y no generen error. 5
+--  5eriving (Eq, Ord, Show)
+
+--- EJEMPLOS ---
+
+-- ghci> Do <= Re
+-- True
+-- ghci> Fa `min` Sol
+-- Fa
+
+------ EJERCICIO 4 ------
+-- Polimorfismo ad hoc
+
+--- 5A ---
+--  5efini usando polimorfismo ad hoc la funcion minimoElemento que calcula (de manera recursiva) cual es el menor valor de una lista de tipo [a]. Asegurate que solo este definida para listas no vacias 5
+min 5moElemento :: Ord a => [a] -> a
+minimoElemento [x] = x
+minimoElemento (x:xs) = min x (minimoElemento xs)
+
+--- EJEMPLOS ---
+
+-- ghci> minimoElemento [4,5,3,7,1]
+-- 1
+-- ghci> minimoElemento "are"
+-- 'a'
+-- ghci> minimoElemento [True,False,True]
+-- False
+-- ghci> minimoElemento []
+-- *** Exception: practico2.hs:(105,1)-(106,49): Non-exhaustive patterns in function minimoElemento
+
+--- B ---
+-- Defini la funcion minimoElemento' de manera tal que el caso base de la recursion sea el de la lista vacia. Para ello revisa la clase Bounded.
+
+minimoElemento' :: (Ord a, Bounded a)=> [a] -> a 
+minimoElemento' [] = maxBound
+minimoElemento' (x:xs) = min x (minimoElemento' xs)
+
+--- EJEMPLOS ---
+
+-- ghci> minimoElemento' []
+-- ()
+-- ghci> minimoElemento' [] :: Bool
+-- True
+-- ghci> minimoElemento' [] :: Int
+-- 9223372036854775807
+
+--- C ---
+-- Usa la funcion minimoElemento para determinar la nota mas grave de la melodia [Fa, La, Sol, Re, Fa]
+
+-- ghci> minimoElemento [Fa, La, Sol, Re, Fa]
+-- Re
+
+------ EJERCICIO 5 ------
+-- SINONIMOS DE TIPOS, CONSTRUCTORES CON PARAMETROS
+
+--- 5A ---
+--  5mplementa el tipo Deportista y todos sus tipos accesorios (NumCamiseta, Altura, Zona, etc) que estan definidos en el practico
+--- 5B ---
+--  5Cual es el tipo del constructor Ciclista?
+--- C ---
+-- Programa la funcion contar_velocistas :: [Deportista] -> Int que dada una lista de deportistas xs, devuelve la cantidad de velocistas que hay dentro de xs. Programar contar_velocistas sin usar igualdad, utilizando pattern matching
+--- D ---
+-- Programar la funcion contar_futbolistas :: [Deportista] -> Zona -> Int que dada una lista de deportistas xs y una zona z, devuelve la cantidad de futbolistas incluidos en xs que juegan en la zona z. No usar igualdad, solo pattern matching
+--- E ---
+-- ¿La funcion anterior usa filter? Si no es asi, reprogramala para usarla
+
+------ EJERCICIO 6 ------
+-- Implementa en Haskell las funciones derivadas en el ejercicio 4
+
+--- 4A ---
+--- 4B ---
+--- 4C ---
+--- 4D ---
+
+------ EJERCICIO 7 ------
+-- Implementa en Haskell las funciones derivadas en el ejercicio 5
+
+--- 5A ---
+--- 5B ---
+--- 5C ---
+--- 5D ---
+
+------ EJERCICIO 8 ------
+-- Implementa en Haskell las funciones derivadas en el ejercicio 6
+
+--- 6A ---
+--- 6B ---
+--- 6C ---
+--- 6D ---
+
+------ EJERCICIO 9 ------
+-- Implementa en Haskell las funciones derivadas en el ejercicio 7
+
+--- 7A ---
+--- 7B ---
+
+------ EJERCICIO 10 ------
+-- DEFINICION DE CLASES
+
+--- A ---
+-- Implementa la funcion sonidoNatural como esta definida en el pdf
+--- B ---
+-- Defini el tipo enumerado Alteracion que consta de los constructores Bemol, Natural y Sostenido
+--- C ---
+-- Defini el tipo algebraico NotaMusical que debe tener un solo constructor que llamaremos Nota el cual toma dos parametros. El primer parametro es de tipo NotaBasica y el segundo de tipo Alteracion. De esta manera cuando se quiera representar una nota alterada se puede usar como segundo parametro del constructor un Bemol o Sostenido y si se quiere representar una nota sin alteraciones se usa Natural como seguno parametro
+--- D ---
+-- Defini la funcion sonidoCromatico :: NotaMusical -> Int que devuelve el sonido de una nota, incrementado en uno su valor si tienen la alteracion Sostenido, decrementando en uno si tiene la alteracion Bemol y dejando su valor intacto si la alteracion es Natural
+--- E ---
+-- Inclui el tipo NotaMus
+--- F ---
+
+------ EJERCICIO 11 ------
+------ EJERCICIO 12 ------
+------ EJERCICIO 13 ------
+------ EJERCICIO 14 ------
+------ EJERCICIO 15 ------
+------ EJERCICIO 16 ------
+------ EJERCICIO 17 ------
