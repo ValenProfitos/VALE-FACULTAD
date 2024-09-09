@@ -587,11 +587,113 @@ duplica' xs = map (*2) xs
 -- [10,12,14,16]
 
 ------ EJERCICIO 11 ------
--- Programa una funcion que dada una lista de numeros xs, calcula una lista que tiene como elementos aque
+-- Programa una funcion que dada una lista de numeros xs, calcula una lista que tiene como elementos aquellos numeros de xs que son primos
+
+--- A ---
+-- Definila usando recursion
+
+sonPrimos :: [Int] -> [Int]
+sonPrimos [] = []
+sonPrimos (x:xs)    | esPrimo' x = x : sonPrimos xs
+                    | otherwise = sonPrimos xs
+
+--- EJEMPLOS ---
+
+-- ghci> sonPrimos [1,2,3,4]
+-- [1,2,3]
+-- ghci> sonPrimos [4,5,6,7]
+-- [5,7]
+
+--- B ---
+-- Definila utilizando la funcion filter
+
+sonPrimos' :: [Int] -> [Int]
+sonPrimos' xs = filter esPrimo' xs
+
+--- EJEMPLOS ---
+
+-- ghci> sonPrimos' [1,2,3,4]
+-- [1,2,3]
+-- ghci> sonPrimos' [4,5,6,7]
+-- [5,7]
+
+--- C ---
+-- Revisa tu definicion del ejercicio 6g. ¿Como podes mejorarla?
+
+multiplicaPrimos' :: [Int] -> Int
+multiplicaPrimos' xs = productoria' (filter esPrimo' xs) id 
+
+--- EJEMPLOS ---
+
+-- ghci> multiplicaPrimos' [1,2,3,4]
+-- 6
+-- ghci> multiplicaPrimos' [4,5,6,7]
+-- 35
+
 ------ EJERCICIO 12 ------
+-- La funcion primIgualesA toma un valor y una lista, y calcula el tramo inicial mas largo de lista cuyos elementos son iguales a ese valor
+
+--- A ---
+-- Programa primIgualesA por recursion
+
+primIgualesA :: Eq a => a -> [a] -> [a]
+primIgualesA _ [] = []
+primIgualesA n (x:xs)   | n == x = x : primIgualesA n xs
+                        | otherwise = []
+
+--- EJEMPLOS ---
+
+-- ghci> primIgualesA 'e' "eaaee"
+-- "e"
+-- ghci> primIgualesA 'e' "eegge"
+-- "ee"
+
+--- B ---
+-- Programa nuevamente la funcion utilizando takeWhile
+
+primIgualesA' :: Eq a => a -> [a] -> [a]
+primIgualesA' n xs = takeWhile (==n) xs 
+
+--- EJEMPLOS ---
+
+-- ghci> primIgualesA' 3 [3,3,3,5,3]
+-- [3,3,3]
+-- ghci> primIgualesA' 3 [3,5,5,5,3]
+-- [3]
 
 ------ EJERCICIO 13 ------
+-- La funcion primIguales toma una lista y devuelve el mayor tramo inicial de la lista cuyos elementos son todos iguales entre si
 
------- EJERCICIO 14 ------
+--- A ---
+-- Programa primIguales por recursion
 
------- EJERCICIO 15 ------
+primIguales :: Eq a => [a] -> [a]
+primIguales [] = []
+primIguales [x] = [x]
+primIguales (x:y:xs)    | x == y = x : primIguales (y:xs)
+                        | otherwise = [x]
+
+--- EJEMPLOS ---
+
+-- ghci> primIguales "llla"
+-- "lll"
+-- ghci> primIguales [3,4,3,3]
+-- [3]
+
+--- B ---
+-- Usa cualquier version de primIgualesA para programar primIguales. Esta permitido dividir en casos, pero no usar recursion.
+
+primIguales' :: Eq a => [a] -> [a]
+primIguales' [] = []
+primIguales' (x:xs) = primIgualesA' x (x:xs)
+
+--- EJEMPLOS ---
+
+ghci> primIguales' [3,4,3,3]
+[3]
+ghci> primIguales' "llla"
+"lll"
+
+------ EJERCICIO 14 (*) ------
+
+------ EJERCICIO 15 (*) ------
