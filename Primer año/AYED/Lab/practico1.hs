@@ -689,10 +689,10 @@ primIguales' (x:xs) = primIgualesA' x (x:xs)
 
 --- EJEMPLOS ---
 
-ghci> primIguales' [3,4,3,3]
-[3]
-ghci> primIguales' "llla"
-"lll"
+-- ghci> primIguales' [3,4,3,3]
+-- [3]
+-- ghci> primIguales' "llla"
+-- "lll"
 
 ------ EJERCICIO 14 (*) ------
 
