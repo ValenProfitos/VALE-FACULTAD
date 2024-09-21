@@ -939,3 +939,29 @@ la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b
 la_borrar a Vacia = Vacia
 la_borrar a (Nodo b c d)    | b == a = la_borrar a d
                             | b /= a = (Nodo b c (la_borrar a d))
+
+
+---- EJERCICIOS PRACTICOS VIEJOS UTILES ---
+
+-- Otro tipo de datos muy util y que se puede usar para representar muchas situaciones es el arbol.
+
+--En este ejercicio consideramos arboles binarios, es decir cada rama tiene solo dos descendientes inmediatos
+
+data Arbol a = Hoja | Rama (Arbol a) a (Arbol a)
+
+-- a_long devuelve la cantidad de datos almacenados
+a_long :: Arbol a -> Int
+a_long Hoja = 0
+a_long (Rama izq _ der) = 1 + a_long izq + a_long der
+
+-- a_hojas que dado un arbol devuelve la cantidad de hojas
+
+a_hojas :: Arbol a -> Int
+a_hojas Hoja = 1
+a_hojas (Rama izq _ der) = a_hojas izq + a_hojas der
+
+-- a_inc que dado un arbol que contiene numeros, los incrementa en uno
+
+a_inc :: Num a => Arbol a -> Arbol a 
+a_inc Hoja = Hoja
+a_inc (Rama izq valor der) = Rama (a_inc izq) (valor +1) (a_inc der)
