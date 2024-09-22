@@ -503,7 +503,6 @@ minimoElemento (x:xs) = min x (minimoElemento xs)
 -- ghci> minimoElemento [True,False,True]
 -- False
 -- ghci> minimoElemento []
--- *** Exception: practico2.hs:(105,1)-(106,49): Non-exhaustive patterns in function minimoElemento
 
 --- B ---
 -- Defini la funcion minimoElemento' de manera tal que el caso base de la recursion sea el de la lista vacia. Para ello revisa la clase Bounded.

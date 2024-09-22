@@ -68,3 +68,17 @@ quien_jugo z (_ : js) = quien_jugo z js
 -- ghci> quien_jugo Tijera jugadores 
 -- ["Lauti"]
 
+data NotaMusical = Do | Re | Mi | Fa | Sol | La | Si
+
+data Figura = Negra | Corchea
+
+data Melodia = Vacia | Entonar NotaMusical Figura Melodia
+
+contar_tiempos ::  Melodia -> Int
+contar_tiempos Vacia = 0
+contar_tiempos (Entonar _ Negra melodia) = 2 + contar_tiempos melodia
+contar_tiempos (Entonar _ Corchea melodia) = 1 + contar_tiempos melodia
+
+-- ghci> pink = Entonar Re Negra (Entonar Mi Corchea (Entonar Fa Negra (Entonar Mi Negra Vacia)))
+-- ghci> contar_tiempos pink 
+-- 7
