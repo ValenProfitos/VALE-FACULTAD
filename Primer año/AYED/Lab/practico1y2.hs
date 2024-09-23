@@ -964,3 +964,129 @@ a_hojas (Rama izq _ der) = a_hojas izq + a_hojas der
 a_inc :: Num a => Arbol a -> Arbol a 
 a_inc Hoja = Hoja
 a_inc (Rama izq valor der) = Rama (a_inc izq) (valor +1) (a_inc der)
+
+--- simfdf---
+
+type Altura = Int
+
+data Modalidad = Carretera | Pista deriving Show
+
+data Deportista = Velocista Altura | Ciclista Modalidad deriving Show
+
+juan :: Deportista
+juan = Velocista 172
+
+-- ghci> juan
+-- Velocista 172
+
+esVelocistaAlto :: Deportista -> Int -> Bool
+esVelocistaAlto (Velocista alt) n   | n < alt = True
+                                    | otherwise = False
+
+-- ghci> esVelocistaAlto juan 160
+-- True
+-- ghci> esVelocistaAlto juan 172
+-- False
+-- ghci> esVelocistaAlto juan 180
+-- False
+
+esVelocista :: Deportista -> Bool 
+esVelocista (Velocista _) = True
+esVelocista (_) = False
+
+contar_velocistas :: [Deportista] -> Int
+contar_velocistas [] = 0
+contar_velocistas (x : xs)  | esVelocista x = 1 + contar_velocistas xs
+                            | otherwise = contar_velocistas xs
+
+-- ghci> deportistas = [juan, Ciclista Carretera, Velocista 150]
+-- ghci> contar_velocistas deportistas 
+-- 2
+
+esCiclista :: Deportista -> Bool
+esCiclista (Ciclista _) = True
+esCiclista (_) = False
+
+-- ghci> maria = Ciclista Carretera 
+-- ghci> esCiclista juan 
+-- False
+-- ghci> esCiclista maria 
+-- True
+
+data Cola = VaciaC | Encolada Deportista Cola deriving Show
+
+encolar :: Deportista -> Cola -> Cola
+encolar dep VaciaC = Encolada dep VaciaC
+encolar dep (Encolada dep1 res) = Encolada dep1 (encolar dep res)
+
+-- ghci> maria = Ciclista Carretera 
+-- ghci> colaVacia = VaciaC 
+-- ghci> colaConJuan = encolar juan colaVacia 
+-- ghci> colaConJuan 
+-- Encolada (Velocista 172) VaciaC
+-- ghci> colaConJuan = Encolada juan VaciaC
+-- ghci> colaConMaria = encolar maria colaConJuan
+-- ghci> colaConMaria 
+-- Encolada (Velocista 172) (Encolada (Ciclista Carretera) VaciaC)
+
+type Letras = (Char, Char, Char)
+
+type Numeracion = Int
+
+data Matricula = Patente Letras Numeracion deriving (Eq, Ord)
+
+letra_valida :: Char -> Bool
+letra_valida c = 'A' <= c && c <= 'Z'
+
+-- ghci> letra_valida '3'
+-- False
+-- ghci> letra_valida '@'
+-- False
+-- ghci> letra_valida 'A'
+-- True
+-- ghci> letra_valida 'a'
+-- False
+-- ghci> letra_valida 'Z'
+-- True
+-- ghci> letra_valida 'z'
+-- False
+-- ghci> letra_valida 'B'
+-- True
+-- ghci> letra_valida 'R'
+-- True
+
+letras_validas :: Letras -> Bool
+letras_validas (l1,l2,l3) = letra_valida l1 && letra_valida l2 && letra_valida l3
+
+matricula_validada :: Matricula -> Bool
+matricula_validada (Patente letrs num) = letras_validas letrs && 0 <= num && num <= 999
+
+-- ghci> matricula_validada (Patente ('A','A','A') 123)
+-- True
+-- ghci> matricula_validada (Patente ('A','A','A') 0)
+-- True
+-- ghci> matricula_validada (Patente ('A','A','A') 1000)
+-- False
+-- ghci> matricula_validada (Patente ('A','A','g') 999)
+-- False
+
+filtrar_patentes :: [Matricula] -> Numeracion -> [Matricula]
+filtrar_patentes [] _ = []
+filtrar_patentes ((Patente letras num) : ps) n   | num == n = (Patente letras num) : filtrar_patentes ps n
+                                            | otherwise = filtrar_patentes ps n
+
+type Titular = String
+
+data Estado = SinDeuda | ConDeuda
+
+data Registro = SinRegs | AgregaReg Matricula Estado Titular Registro
+
+mismo_estado :: Estado -> Estado -> Bool
+mismo_estado SinDeuda SinDeuda = True
+mismo_estado ConDeuda ConDeuda = True
+mismo_estado _ _ = False
+
+consulta :: Registro -> Titular -> Estado -> [Matricula]
+consulta SinRegs _ _ = []
+consulta (AgregaReg matricula estado titular resto) ti ei   | titular == ti && mismo_estado estado ei = matricula : consulta resto ti ei
+                                                            | otherwise = consulta resto ti ei
