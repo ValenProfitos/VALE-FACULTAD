@@ -980,6 +980,7 @@ juan = Velocista 172
 -- Velocista 172
 
 esVelocistaAlto :: Deportista -> Int -> Bool
+esVelocistaAlto (Ciclista _) = False
 esVelocistaAlto (Velocista alt) n   | n < alt = True
                                     | otherwise = False
 
@@ -1090,3 +1091,10 @@ consulta :: Registro -> Titular -> Estado -> [Matricula]
 consulta SinRegs _ _ = []
 consulta (AgregaReg matricula estado titular resto) ti ei   | titular == ti && mismo_estado estado ei = matricula : consulta resto ti ei
                                                             | otherwise = consulta resto ti ei
+
+---- mamamama ----
+
+duracionPeliMasLarga :: [Video] -> Int 
+duracionPeliMasLarga [] = 0
+duracionPeliMasLarga ((Pelicula _ _ duracion _):ls) = max duracion (duracionPeliMasLarga ls)
+duracionPeliMasLarga (_:ls) = duracionPeliMasLarga ls
