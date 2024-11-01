@@ -5,20 +5,23 @@
 #define N 5
 
 void pedir_arreglo(int a[],int tam){
+    int i = 0;
     printf("Ingrese %d valores para el arreglo: \n", tam);
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("Ingrese el valor para a[%d]: ", i);
         scanf("%d", &a[i]);
+        i++;
     }
     
 }
 
 int prim_iguales(int a[], int tam){
+    int i = 0;
     int contador = 1;
     int longitud_maxima = 1;
 
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         if (a[i] == a[i - 1])
         {
@@ -31,15 +34,17 @@ int prim_iguales(int a[], int tam){
         } else {
             contador = 1;
         }
-        
+        i++;
     }
     return longitud_maxima;
 }
 
 void imprimir_tramo_inicial(int a[], int longitud_maxima) {
+    int i = 0;
     printf("Tramo inicial de elementos iguales: \n[");
-    for (int i = 0; i < longitud_maxima; i++) {
+    while (i < longitud_maxima) {
         printf("%d,", a[i]);
+        i++;
     }
     printf("]\n");
 }

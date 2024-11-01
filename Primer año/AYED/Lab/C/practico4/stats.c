@@ -6,39 +6,43 @@
 #include <float.h>
 
 void pedir_arreglo(float a[], int tam){
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         printf("Ingrese el valor de a[%d]: \n", i);
         scanf("%f", &a[i]);
+        i++;
     }
     
 }
 
 float minimo(float a[], int tam){
+    int i = 0; 
     float min = FLT_MAX;
 
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         if (a[i] < min)
         {
             min = a[i];
         }
-        
+        i++;
     }
 
     return min;
 }
 
 float maximo(float a[], int tam){
+    int i = 0;
     float max = FLT_MIN;
 
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         if (a[i] > max)
         {
             max = a[i];
         }
-        
+        i++;
     }
     return max;
 }

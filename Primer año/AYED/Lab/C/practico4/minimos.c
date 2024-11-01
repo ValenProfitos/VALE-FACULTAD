@@ -1,53 +1,60 @@
 // gcc -Wall -Wextra -std=c99 minimos.c -o minimos
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <limits.h>
 #include <assert.h>
 
 #define N 5
 
 void pedir_arreglo(int a[], int tam){
+    int i = 0;
     printf("Ingrese %d valores para el arreglo: \n", tam);
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("Ingrese el valor para a[%d]: ", i);
         scanf("%d", &a[i]);
+        i++;
     }
     
 }
 
 void imprimir_arreglo(int tam, int a[]){
+    int i = 0;
     printf("Los valores del arreglo son: \n");
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("a[%d]: %d\n", i, a[i]);
+        i++;
     }
     
 }
 
-int existe_par(int tam, int a[]){
-    for (int i = 0; i < tam; i++)
+bool existe_par(int tam, int a[]){
+    int i = 0;
+    while(i < tam)
     {
         if (a[i] % 2 == 0)
         {
-            return 1;
+            return true;
         }
-        
+        i++;
     }
     
-    return 0;
+    return false;
 }
 
-int existe_impar(int tam, int a[]){
-    for (int i = 0; i < tam; i++)
+bool existe_impar(int tam, int a[]){
+    int i = 0;
+    while (i < tam)
     {
         if (a[i] % 2 != 0)
         {
-            return 1;
+            return true;
         }
-        
+        i++;
     }
-    return 0;
+    return false;
 }
 
 int minimo_pares(int tam, int a[]){
@@ -55,13 +62,14 @@ int minimo_pares(int tam, int a[]){
 
     int min = INT_MAX;
 
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if ((a[i] < min) && (a[i] % 2 == 0))
         {
             min = a[i];
         }
-        
+        i++;
     }
     return min;
 }
@@ -71,22 +79,32 @@ int minimo_impares(int a[], int tam){
 
     int min = INT_MAX;
 
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if ((a[i] < min) && (a[i] % 2 != 0))
         {
             min = a[i];
         }
-        
+        i++;
     }
     return min;
 }
 
 int minimo_arreglo(int min_par, int min_impar){
-    return (min_par < min_impar) ? min_par : min_impar;
+    int min;
+    if (min_par < min_impar)
+    {
+        min = min_par;
+    } else {
+        min = min_impar;
+    }
+    
+    return min;
 }
 
 int main(void){
+    assert(N > 0);
     int a[N];
     pedir_arreglo(a, N);
     imprimir_arreglo(N, a);

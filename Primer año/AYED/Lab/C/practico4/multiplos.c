@@ -4,44 +4,50 @@
 #include <stdbool.h>
 
 void pedir_arreglo(int tam, int a[]){
+    int i = 0;
     printf("Ingrese %d valores para el arreglo: \n", tam);
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("Ingrese el valor para a[%d]: ", i);
         scanf("%d", &a[i]);
+        i++;
     }
     
 }
 
 void imprimir_arreglo(int tam, int a[]){
+    int i = 0;
     printf("Los valores del arreglo son: \n");
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("a[%d]: %d\n", i, a[i]);
+        i++;
     }
     
 }
 
 bool todos_pares(int tam, int a[]){
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if (a[i] % 2 != 0)
         {
             return false;
         }
-        
+        i++;
     }
     return true;
 }
 
 bool existe_multiplo(int m, int tam, int a[]){
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if (a[i] % m == 0)
         {
             return true;
         }
-        
+        i++;
     }
     return false;
 }

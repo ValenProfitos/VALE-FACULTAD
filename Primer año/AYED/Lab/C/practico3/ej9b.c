@@ -15,18 +15,23 @@ void imprimir_entero(char name, int x){
 
 void pedir_arreglo(int tam, int a[]){
     printf("Ingrese %d valores para el arreglo: \n", tam);
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         printf("Ingrese el valor para a[%d]: \n", i);
         scanf("%d", &a[i]);
+        i++;
     }
+    
 }
 
 void imprimir_arreglo(int tam, int a[]){
+    int i = 0;
     printf("Los valores del arreglo son: \n");
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("a[%d]: %d\n", i, a[i]);
+        i++;
     }
     
 }

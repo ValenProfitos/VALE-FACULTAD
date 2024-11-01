@@ -15,25 +15,28 @@ struct asoc
 };
 
 bool asoc_existe(int tam, struct asoc a[], clave_t c, valor_t v){
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if (a[i].clave == c && a[i].valor == v)
         {
             return true; // Se encontro la clave
         }
-        
+        i++;
     }
     return false; // No se encontro la clave
 }
 
 int main(){
     struct asoc a[N];
+    int i = 0;
 
     // Pedir datos para el arreglo de asoc
-    for (int i = 0; i < N; i++)
+    while (i < N)
     {
         printf("Ingrese la clave y el valor para el indice %d: \n", i);
         scanf(" %c %d", &a[i].clave, &a[i].valor);
+        i++;
     }
 
     // Pedir una clave para buscar

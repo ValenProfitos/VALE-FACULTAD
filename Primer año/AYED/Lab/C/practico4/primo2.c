@@ -8,13 +8,14 @@ bool es_primo(int num){
     {
         return false;
     }
-    for (int i = 2; i  * i <= num; i++)
+    int i = 2;
+    while (i  * i <= num)
     {
         if (num % i == 0)
         {
             return false;
         }
-        
+        i++;
     }
     return true;
     

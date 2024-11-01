@@ -5,11 +5,13 @@
 #define N 5
 
 void pedir_arreglo(int a[], int tam){
+    int i = 0;
     printf("Ingrese %d valores para el arreglo:\n", tam);
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("Ingrese el valor para a[%d]: ", i);
         scanf("%d", &a[i]);
+        i++;
     }
     
 }
@@ -25,7 +27,8 @@ struct comp_t cuantos(int tam, int a[], int elem)
 {
     struct comp_t comp = {0, 0, 0};
 
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if (a[i] < elem)
         {
@@ -36,7 +39,7 @@ struct comp_t cuantos(int tam, int a[], int elem)
         } else {
             comp.mayores++;
         }
-        
+        i++;
     }
     
     return comp;

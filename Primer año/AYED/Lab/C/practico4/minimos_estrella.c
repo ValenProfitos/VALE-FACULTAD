@@ -8,95 +8,105 @@
 #define N 5
 
 void pedir_arreglo(int a[], int tam){
+    int i = 0;
     printf("Ingrese %d valores para el arreglo: \n", tam);
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("Ingrese el valor para a[%d]: ", i);
         scanf("%d", &a[i]);
+        i++;
     }
     
 }
 
 void imprimir_arreglo(int a[], int tam){
+    int i = 0;
     printf("Los valores del arreglo son: \n");
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         printf("a[%d]: %d\n", i, a[i]);
+        i++;
     }
     
 }
 
 bool existe_par(int a[], int tam){
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if (a[i] % 2 == 0)
         {
             return true;
         }
-        
+        i++;
     }
     return false;
 }
 
 bool existe_impar(int a[],int tam){
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if (a[i] % 2 != 0)
         {
             return true;
         }
-        
+        i++;
     }
     return false;
 }
 
 bool todos_pares(int a[], int tam){
-    for (int i = 0; i < tam; i++)
+    int i = 0;
+    while (i < tam)
     {
         if (a[i] % 2 != 0)
         {
             return false;
         }
-        
+        i++;
     }
     return true;
 }
 
 int minimo_pares(int a[],int tam){
+    int i = 0;
     int min = INT_MAX;
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         if ((a[i] < min) && (a[i] % 2 == 0))
         {
             min = a[i];
         }
-        
+        i++;
     }
     return min;
 }
 
 int minimo_impares(int a[], int tam){
+    int i = 0;
     int min = INT_MAX;
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         if ((a[i] < min) && (a[i] % 2 != 0))
         {
             min = a[i];
         }
-        
+        i++;
     }
     return min;
 }
 
 int minimo_elemento(int a[], int tam){
+    int i = 0;
     int min = INT_MAX;
-    for (int i = 0; i < tam; i++)
+    while (i < tam)
     {
         if (a[i] < min)
         {
             min = a[i];
         }
-        
+        i++;
     }
     return min;
 }
